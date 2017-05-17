@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="DukeNukemProject.View.CustomerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DukeNukemProject.View"
+             xmlns:viewmodel="clr-namespace:DukeNukemProject.ViewModel"
+             xmlns:converter="clr-namespace:DukeNukemProject.ViewModel.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="400">
+    <UserControl.Resources>
+        <viewmodel:CustomerViewModel x:Key="CustomerVM"/>
+        <converter:MultiParametersConverter x:Key="MPConverter" />
+    </UserControl.Resources>
+    <Grid>
+
+        <DockPanel Margin="30,30,0,0">
+
+            <StackPanel Width="410" HorizontalAlignment="Left" Margin="0,0,0,443">
+                <Label Content="Phone Number"/>
+                <WrapPanel>
+                    <TextBox Margin="0,0,4,0" Name="Phone" Height="23" TextWrapping="Wrap" Text="" Width="177"  />
+                    <Button Margin="4,0,4,0" Content="SEARCH" Height="18" FontSize="10" Command="{Binding GetCustomerByPhone, Source={StaticResource CustomerVM}}" CommandParameter="{Binding Text, ElementName=Phone}"/>
+                </WrapPanel>
+
+
+                <Label Content="Name"/>
+                <TextBox Name="Name" Height="23" TextWrapping="Wrap" Text="{Binding CustName, Source={StaticResource CustomerVM}, Mode=TwoWay}" Margin="0,0,153,0"/>
+                <Label Content="Address"/>
+                <TextBox Name="Address" Height="23" TextWrapping="Wrap" Text="{Binding CustAddress, Source={StaticResource CustomerVM}, Mode=TwoWay}" Margin="0,0,153,0"/>
+                <Label Content="Email"/>
+                <TextBox Name="Email" Height="23" TextWrapping="Wrap" Text="{Binding CustEmail, Source={StaticResource CustomerVM}, Mode=TwoWay}" Margin="0,0,153,0"/>
+                <Label Content="Other"/>
+                <TextBox Name="Other" Height="23" TextWrapping="Wrap" Text="{Binding CustOther, Source={StaticResource CustomerVM}, Mode=TwoWay}" Margin="0,0,153,0"/>
+                <WrapPanel HorizontalAlignment="Center" Margin="0,4,0,0">
+                    <Button  Margin="0,0,4,0" Content="CREATE" Command="{Binding SaveCustomerOnClick, Source={StaticResource CustomerVM}}" Width="48">
+                        <Button.CommandParameter>
+                            <MultiBinding Converter="{StaticResource MPConverter}">
+                                <Binding Path="." ElementName="Phone" />
+                                <Binding Path="." ElementName="Name" />
+                                <Binding Path="." ElementName="Address" />
+                                <Binding Path="." ElementName="Email" />
+                                <Binding Path="." ElementName="Other" />
+                            </MultiBinding>
+                        </Button.CommandParameter>
+                    </Button>
+                    <Button Content="EDIT" Margin="0,0,4,0" Width="48" Height="20"/>
+                </WrapPanel>
+
+
+            </StackPanel>
+
+
+        </DockPanel>
+
+
+
+    </Grid>
+</UserControl>
+

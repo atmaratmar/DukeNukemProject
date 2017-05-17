@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="DukeNukemProject.View.OrderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DukeNukemProject.View"
+             xmlns:viewmodel="clr-namespace:DukeNukemProject.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="400">
+    <UserControl.Resources>
+        <viewmodel:OrderViewModel x:Key="OrderVM" />
+    </UserControl.Resources>
+    <Grid>
+
+        <StackPanel >
+            <Button HorizontalAlignment="Center" Content="REFRESH" Margin="0,20,20,0" Command="{Binding RefreshOrderOnClick, Source={StaticResource OrderVM}}" />
+            <StackPanel Margin="0,0,0,0">
+                <!--<Label Content="hello" Height="61"/>-->
+                <Label Content="{Binding CustName, Source={StaticResource OrderVM}}" ContentStringFormat="Name: {0}" Height="30"/>
+                <Label Content="{Binding CustPhone, Source={StaticResource OrderVM}}" ContentStringFormat="Telephone Number: {0}" Height="30"/>
+                <Label Content="{Binding CustAddress, Source={StaticResource OrderVM}}" ContentStringFormat="Address: {0}" Height="30"/>
+                <ListView ItemsSource="{Binding ObsItemDetails, Source={StaticResource OrderVM}}" Height="119" Margin="10,0,10,0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <WrapPanel>
+                    <Label Content="{Binding TotalPrice, Source={StaticResource OrderVM}}" ContentStringFormat="Total Price: {0} kr."/>
+                </WrapPanel>
+                <CheckBox IsChecked="{Binding DeliveryIsChecked, Source={StaticResource OrderVM}}" Margin="40,20,0,0">Delivery</CheckBox>
+                <CheckBox IsChecked="{Binding CashIsChecked, Source={StaticResource OrderVM}}" Margin="40,20,0,0">Cash</CheckBox>
+
+
+            </StackPanel>
+
+            <Button Content="Create Order" HorizontalAlignment="Center" Command="{Binding AddOrderOnClick, Source={StaticResource OrderVM}}" />
+
+        </StackPanel>
+
+
+
+    </Grid>
+</UserControl>
